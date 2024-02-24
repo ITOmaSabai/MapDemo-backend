@@ -16,6 +16,7 @@ class Api::V1::MapsController < ApplicationController
     else
       render json: map.errors, status: :unprocessable_entity
     end
+  end
 
   private
 
