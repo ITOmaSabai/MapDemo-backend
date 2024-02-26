@@ -12,8 +12,8 @@ class Api::V1::MapsController < ApplicationController
   def create
     map = Map.new(map_params.except(:addressComponents))
     if map.save
-      AddressService.save_address_from_address_components(map, map_params[:addressComponents])
-      render json: map, status: :created
+      AddressService.save_address_from_address_components(map.id, map_params[:addressComponents])
+      render json: { map: map, address: address }, status: :created
     else
       render json: map.errors, status: :unprocessable_entity
     end
