@@ -10,9 +10,9 @@ class Api::V1::MapsController < ApplicationController
   end
 
   def create
-    map = Map.new(map_params.except(:addressComponents))
+    map = Map.new(map_params.except(:address_components, :formatted_addres))
     if map.save
-      AddressService.save_address_from_address_components(map.id, map_params[:addressComponents])
+      address = AddressService.save_address_from_address_components(map.id, map_params[:address_components], map_params[:formatted_addres])
       render json: { map: map, address: address }, status: :created
     else
       render json: map.errors, status: :unprocessable_entity
@@ -22,6 +22,6 @@ class Api::V1::MapsController < ApplicationController
   private
 
   def map_params
-    params.require(:map).permit(:name, :description, :lat, :lng, addressComponents: [:long_name, :short_name, types: []])
+    params.require(:map).permit(:name, :description, :lat, :lng, :formatted_addres, address_components: [:long_name, :short_name, types: []])
   end
 end
