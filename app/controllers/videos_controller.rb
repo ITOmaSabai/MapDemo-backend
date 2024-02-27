@@ -1,7 +1,7 @@
 class VideosController < ApplicationController
   def create
     if params[:keyword].present?
-      VideoSearchService.call(keyword: params[:keyword])
+      # VideoSearchService.call(keyword: params[:keyword])
       flash[:notice] = 'ビデオを正常に保存しました。'
     else
       flash[:alert] = 'キーワードを入力してください。'
