@@ -10,6 +10,7 @@ class VideosController < ApplicationController
   end
 
   def show
-    @video = Video.find(map_id: params[:id])
+    @video = Video.find_by(map_id: params[:id])
+    render json: @video
   end
 end
