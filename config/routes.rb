@@ -5,5 +5,7 @@ Rails.application.routes.draw do
       resources :videos, only: [:create, :show, :index, :update, :destroy]
     end
   end
-  
+
+  get '*path', to: 'home#index'
+  root to: 'home#index'
 end
