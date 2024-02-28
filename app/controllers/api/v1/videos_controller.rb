@@ -9,6 +9,11 @@ class Api::V1::VideosController < ApplicationController
     redirect_to videos_path # 適切なパスにリダイレクト
   end
 
+def index
+  @video = Video.all
+  render json: @video
+end
+
   def show
     @video = Video.find_by(map_id: params[:id])
     render json: @video
