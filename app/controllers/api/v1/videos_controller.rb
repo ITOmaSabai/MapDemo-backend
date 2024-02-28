@@ -1,4 +1,4 @@
-class VideosController < ApplicationController
+class Api::V1::VideosController < ApplicationController
   def create
     if params[:keyword].present?
       # VideoSearchService.call(keyword: params[:keyword])
