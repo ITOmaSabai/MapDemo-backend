@@ -42,6 +42,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_26_021221) do
     t.index ["map_id"], name: "index_videos_on_map_id"
   end
 
-  add_foreign_key "addresses", "maps"
   add_foreign_key "videos", "maps"
 end
