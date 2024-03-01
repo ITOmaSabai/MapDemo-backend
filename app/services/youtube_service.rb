@@ -12,7 +12,7 @@ class YoutubeService
         q: "#{keyword}",
         # location: "#{lat},#{lng}",
         max_results: '10',
-        order: 'viewCount',
+        # order: 'viewCount',
         type: 'video',
         # videoEmbeddable: 'true'
         # fields: 'items(id,snippet(title,channel_title,thumbnails))'
