@@ -10,12 +10,10 @@ class YoutubeService
     @youtube.list_searches(
         'snippet',
         q: "#{keyword}",
-        # location: "#{lat},#{lng}",
         max_results: '10',
-        # order: 'viewCount',
         type: 'video',
-        # videoEmbeddable: 'true'
-        # fields: 'items(id,snippet(title,channel_title,thumbnails))'
+        video_embeddable: 'true',
+        order: "relevance",
     )
   end
 end
