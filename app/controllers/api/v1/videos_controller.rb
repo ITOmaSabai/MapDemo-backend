@@ -14,8 +14,21 @@ def index
   render json: @video
 end
 
-  def show
-    @video = Video.find_by(map_id: params[:id])
-    render json: @video
+  def search
+    address_for_video = AddressService.save_address_for_video(1, video_params[:address_components], video_params[:formatted_addres])
+    videos_data = VideoSearchService.call(keyword: "#{address_for_video[0]} #{address_for_video[1]} walking tour")
+
+    videos_data.items.each do |video_data|
+      youtube_video_id: video_data.id.video_id,
+      thumbnail_url: video_data.snippet.thumbnails.high.url
+    end
+
+    render json: videos_data
+  end
+
+  private
+
+  def video_params
+    params.require(:video).permit(:formatted_addres, address_components: [:long_name, :short_name, types: []])
   end
 end
