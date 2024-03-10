@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'api/v1/videos/search', to: 'videos#search'
+
   get '*path', to: 'home#index'
   root to: 'home#index'
 end
