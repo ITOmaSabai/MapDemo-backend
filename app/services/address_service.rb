@@ -15,7 +15,8 @@ class AddressService
   def self.save_address_for_video(map_id, address_components, formatted_address)
     country = extract_long_name_by_type(address_components, 'country')
     administrative_area_level_1 = extract_long_name_by_type(address_components, 'administrative_area_level_1')
-    return [country, administrative_area_level_1]
+    locality = extract_long_name_by_type(address_components, 'locality')
+    return [country, administrative_area_level_1, locality]
   end
 
   private
