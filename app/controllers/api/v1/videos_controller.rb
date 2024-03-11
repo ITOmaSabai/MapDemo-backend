@@ -17,7 +17,8 @@ class Api::V1::VideosController < ApplicationController
   def search
     address_for_video = AddressService.save_address_for_video(1, video_params[:address_components], video_params[:formatted_address])
     videos_data = VideoSearchService.call(keyword: "#{address_for_video[0]} #{address_for_video[1]} walking tour")
-    render json: videos_data
+    search_keywords = ("#{address_for_video[0]} #{address_for_video[1]} walking tour")
+    render json: {videos_data: videos_data, search_keywords: search_keywords}
   end
 
   private
