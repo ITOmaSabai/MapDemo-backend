@@ -4,18 +4,19 @@
 #    validator = FirebaseAuth::TokenValidator.new(token)
 #    payload = validator.validate!
 #
-class FirebaseAuth::TokenValidator
+require 'jwt'
+module FirebaseAuthenticator
   class InvalidTokenError < StandardError; end
 
   ALG = 'RS256'
   CERTS_URI = 'https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com'
   CERTS_CACHE_KEY = 'firebase_auth_certificates'
-  PROJECT_ID = 'YOUR_PROJECT_ID'
+  PROJECT_ID = 'mapdemo-415200'
   ISSUER_URI_BASE = 'https://securetoken.google.com/'
 
-  def initialize(token)
-    @token = token
-  end
+  # def initialize(token)
+  #   @token = token
+  # end
 
   #
   # Validates firebase authentication token
@@ -23,7 +24,7 @@ class FirebaseAuth::TokenValidator
   # @raise [InvalidTokenError] validation error
   # @return [Hash] valid payload
   #
-  def validate!
+  def validate(token)
     options = {
       algorithm: ALG,
       iss: ISSUER_URI_BASE + PROJECT_ID,
@@ -32,7 +33,7 @@ class FirebaseAuth::TokenValidator
       verify_aud: true,
       verify_iat: true,
     }
-    payload, _ = JWT.decode(@token, nil, true, options) do |header|
+    payload, _ = JWT.decode(token, nil, true, options) do |header|
       cert = fetch_certificates[header['kid']]
       if cert.present?
         OpenSSL::X509::Certificate.new(cert).public_key
@@ -45,7 +46,7 @@ class FirebaseAuth::TokenValidator
     raise InvalidTokenError.new('Invalid auth_time') unless Time.zone.at(payload['auth_time']).past?
     raise InvalidTokenError.new('Invalid sub') if payload['sub'].empty?
 
-    payload
+    puts payload
   rescue JWT::DecodeError => e
     Rails.logger.error e.message
     Rails.logger.error e.backtrace.join("\n")
