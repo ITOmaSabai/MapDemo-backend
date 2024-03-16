@@ -10,7 +10,7 @@ class YoutubeService
     @youtube.list_searches(
         'snippet',
         q: "#{keyword}",
-        max_results: '10',
+        max_results: '3',
         type: 'video',
         video_embeddable: 'true',
         order: "relevance",
