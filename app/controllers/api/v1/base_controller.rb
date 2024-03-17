@@ -1,8 +1,23 @@
-require './app/controllers/concerns/firebase_authenticator.rb'
-require 'jwt'
-require 'net/http'
+class Api::V1::BaseController < ApplicationController
+  include FirebaseAuthenticator
 
-class ApplicationController < ActionController::API
+  before_action :authenticate
+
+  def authenticate
+    authenticate_with_http_token do |token, _options|
+      result = verify_id_token(token)
+    end
+
+    if result[:errors]
+      render400(nil, result[:errors])
+    else
+      @_current_user = User.find_or_create_user(result)
+    end
+  end
+
+  def current_user
+    @_current_user
+  end
 
   def authenticate
     auth_header = request.headers["Authorization"]&.split&.last
@@ -41,5 +56,4 @@ class ApplicationController < ActionController::API
   def not_authenticated
     render json: { error: { messages: ["ログインしてください"] } }, status: :unauthorized
   end
-  
 end
