@@ -10,10 +10,10 @@ class Api::V1::MapsController < ApplicationController
   end
 
   def create
-    map = Map.new(map_params.except(:address_components, :formatted_addres))
+    map = Map.new(map_params.except(:address_components, :formatted_address))
     if map.save
-      address = AddressService.save_address_from_address_components(map.id, map_params[:address_components], map_params[:formatted_addres])
-      address_for_video = AddressService.save_address_for_video(map.id, map_params[:address_components], map_params[:formatted_addres])
+      address = AddressService.save_address_from_address_components(map.id, map_params[:address_components], map_params[:formatted_address])
+      address_for_video = AddressService.save_address_for_video(map.id, map_params[:address_components], map_params[:formatted_address])
       videos_data = VideoSearchService.call(keyword: "#{address_for_video[0]} #{address_for_video[1]} walking tour")
 
       videos_data.items.each do |video_data|
@@ -32,6 +32,6 @@ class Api::V1::MapsController < ApplicationController
   private
 
   def map_params
-    params.require(:map).permit(:name, :description, :lat, :lng, :formatted_addres, address_components: [:long_name, :short_name, types: []])
+    params.require(:map).permit(:name, :description, :lat, :lng, :formatted_address, address_components: [:long_name, :short_name, types: []])
   end
 end
