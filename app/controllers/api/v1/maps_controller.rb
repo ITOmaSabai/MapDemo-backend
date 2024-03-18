@@ -32,6 +32,6 @@ class Api::V1::MapsController < ApplicationController
   private
 
   def map_params
-    params.require(:map).permit(:name, :description, :lat, :lng, :formatted_address, address_components: [:long_name, :short_name, types: []])
+    params.require(:map).permit(:name, :description, :lat, :lng, :formatted_address, :user_id, address_components: [:long_name, :short_name, types: []])
   end
 end
