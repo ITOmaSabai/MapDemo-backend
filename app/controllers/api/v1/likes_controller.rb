@@ -1,4 +1,4 @@
-class LikesController < ApplicationController
+class Api::V1::LikesController < ApplicationController
   def create
     like = Like.new(like_params)
     if like.save
