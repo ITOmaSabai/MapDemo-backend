@@ -1,4 +1,9 @@
 class Api::V1::LikesController < ApplicationController
+  def index
+    likes = Like.where(map_id: params[:map_id])
+    render json: likes
+  end
+
   def create
     like = Like.new(like_params)
     if like.save
