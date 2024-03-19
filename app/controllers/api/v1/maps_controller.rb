@@ -1,7 +1,7 @@
 class Api::V1::MapsController < ApplicationController
   def index
-    @maps = Map.includes(:address).where.not(lat: nil, lng: nil)
-    render json: @maps, include: :address
+    @maps = Map.includes(:address, :likes).where.not(lat: nil, lng: nil)
+    render json: @maps, include: [:address, :likes]
   end
 
   def show
