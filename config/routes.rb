@@ -6,6 +6,7 @@ Rails.application.routes.draw do
         post 'search', on: :collection
       end
       resources :addresses, only: [:index]
+      resources :likes, only: [:index, :create, :destroy]
     end
   end
 

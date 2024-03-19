@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_26_021221) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_19_031259) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -24,6 +24,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_26_021221) do
     t.index ["map_id"], name: "index_addresses_on_map_id"
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "map_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "map_id"], name: "index_likes_on_user_id_and_map_id", unique: true
+  end
+
   create_table "maps", force: :cascade do |t|
     t.string "name", null: false
     t.string "description"
@@ -31,6 +39,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_26_021221) do
     t.datetime "updated_at", null: false
     t.float "lat", null: false
     t.float "lng", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_maps_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "uid"
+    t.string "avatar"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "videos", force: :cascade do |t|
@@ -42,5 +60,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_26_021221) do
     t.index ["map_id"], name: "index_videos_on_map_id"
   end
 
+  add_foreign_key "likes", "maps"
+  add_foreign_key "likes", "users"
+  add_foreign_key "maps", "users"
   add_foreign_key "videos", "maps"
 end
