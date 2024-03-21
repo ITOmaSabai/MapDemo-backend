@@ -29,6 +29,15 @@ class Api::V1::MapsController < ApplicationController
     end
   end
 
+  def delete
+    map = Map.find(params[:id])
+    if map.destroy
+      render json: {}, status: :no_content
+    else
+      render json: { error: "削除に失敗しました" }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def map_params
