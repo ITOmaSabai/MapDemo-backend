@@ -29,7 +29,7 @@ class Api::V1::MapsController < ApplicationController
     end
   end
 
-  def delete
+  def destroy
     map = Map.find(params[:id])
     if map.destroy
       render json: {}, status: :no_content
