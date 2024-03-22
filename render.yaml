@@ -1,12 +1,12 @@
 databases:
-  - name: MapDemo
-    databaseName: map_demo
+  - name: MapDemo2
+    databaseName: map_demo_2
     user: ito
     region: singapore
 
 services:
   - type: web
-    name: MapDemo
+    name: MapDemo2
     env: ruby
     region: singapore
     buildCommand: "./bin/render-build.sh"
