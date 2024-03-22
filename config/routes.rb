@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :addresses, only: [:index]
       resources :users, only: [:index, :create, :destroy]
       resources :likes, only: [:index, :create, :destroy]
+      resource :authentication, only: [:create]
     end
   end
 

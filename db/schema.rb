@@ -51,14 +51,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_19_031259) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "name"
-    t.string "uid"
-    t.string "avatar"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "videos", force: :cascade do |t|
     t.string "youtube_video_id"
     t.string "thumbnail_url"

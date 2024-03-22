@@ -1,4 +1,11 @@
 class User < ApplicationRecord
   has_many :maps, dependent: :destroy
   has_many :likes, dependent: :destroy
+
+  def self.find_or_create_user(user_info)
+    user = User.find_by(uid: user_info[:uid])
+    return user if user
+
+    User.create!(uid: user_info[:uid], name: user_info[:name])
+  end
 end
