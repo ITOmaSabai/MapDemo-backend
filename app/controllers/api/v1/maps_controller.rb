@@ -1,7 +1,7 @@
 class Api::V1::MapsController < ApplicationController
   def index
-    @maps = Map.includes(:address).where.not(lat: nil, lng: nil)
-    render json: @maps, include: :address
+    @maps = Map.includes(:address, :likes).where.not(lat: nil, lng: nil)
+    render json: @maps, include: [:address, :likes]
   end
 
   def show
@@ -29,9 +29,18 @@ class Api::V1::MapsController < ApplicationController
     end
   end
 
+  def destroy
+    map = Map.find(params[:id])
+    if map.destroy
+      render json: {}, status: :no_content
+    else
+      render json: { error: "削除に失敗しました" }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def map_params
-    params.require(:map).permit(:name, :description, :lat, :lng, :formatted_address, address_components: [:long_name, :short_name, types: []])
+    params.require(:map).permit(:name, :description, :lat, :lng, :formatted_address, :user_id, address_components: [:long_name, :short_name, types: []])
   end
 end
