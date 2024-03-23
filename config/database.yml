@@ -79,6 +79,7 @@ test:
 #
 production:
   <<: *default
-  database: map_demo_production
-  username: map_demo
-  password: <%= ENV["MAP_DEMO_DATABASE_PASSWORD"] %>
+  database: map_demo_2
+  username: ito
+  url: <%= ENV['DATABASE_URL'] %>
+  # password: <%= ENV["MAP_DEMO_DATABASE_PASSWORD"] %>
