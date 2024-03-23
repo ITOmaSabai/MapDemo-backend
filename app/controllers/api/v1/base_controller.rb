@@ -15,7 +15,6 @@ class Api::V1::BaseController < ApplicationController
         render json: {message: "400"}
       else
         @_current_user = User.find_or_create_user(result)
-        render json: {message: "OK", current_user: @_current_user}
       end
     end
   end
