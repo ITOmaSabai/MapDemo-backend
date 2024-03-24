@@ -1,11 +1,16 @@
-class Api::V1::LikesController < ApplicationController
+class Api::V1::LikesController < Api::V1::BaseController
+
+  skip_before_action :authenticate, only: [:index]
+
   def index
     likes = Like.where(map_id: params[:map_id])
     render json: likes
   end
 
   def create
-    like = Like.new(like_params)
+    @_current_user = current_user
+
+    like = @_current_user.likes.new(like_params)
     if like.save
       render json: like, status: :created
     else
@@ -13,7 +18,10 @@ class Api::V1::LikesController < ApplicationController
   end
 
   def destroy
-    Like.destroy(params[:id])
+    @_current_user = current_user
+
+    like = @_current_user.likes.find_by(id: params[:id])
+    like&.destroy
     head :no_content
   end
 
