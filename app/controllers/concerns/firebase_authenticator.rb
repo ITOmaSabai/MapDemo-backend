@@ -17,7 +17,7 @@ module FirebaseAuthenticator
     errors = verify(id_token, public_key)
 
     if errors.empty?
-      { uid: payload['user_id'], name: payload['name'] }
+      { uid: payload['user_id'], name: payload['name'], avatar: payload['picture'] }
     else
       { errors: errors.join(' / ') }
     end

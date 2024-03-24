@@ -6,6 +6,6 @@ class User < ApplicationRecord
     user = User.find_by(uid: user_info[:uid])
     return user if user
 
-    User.create!(uid: user_info[:uid], name: user_info[:name])
+    User.create!(uid: user_info[:uid], name: user_info[:name], avatar: user_info[:avatar])
   end
 end
