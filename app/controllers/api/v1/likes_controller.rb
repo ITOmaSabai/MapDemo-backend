@@ -28,6 +28,6 @@ class Api::V1::LikesController < Api::V1::BaseController
   private
 
   def like_params
-    params.require(:like).permit(:user_id, :map_id)
+    params.require(:like).permit(:user_id, :map_id, :uid)
   end
 end
