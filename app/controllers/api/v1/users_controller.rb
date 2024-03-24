@@ -6,9 +6,10 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def show
     @_current_user = current_user
+    user_with_relations = User.includes(:maps, :likes).find(@_current_user.id)
 
-    if @_current_user
-      render json: @_current_user
+    if user_with_relations
+      render json: user_with_relations.as_json(include: [:maps, :likes])
     else
       render json: {}, status: :not_found
     end
