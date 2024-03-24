@@ -1,4 +1,20 @@
-class Api::V1::UsersController < ApplicationController
+class Api::V1::UsersController < Api::V1::BaseController
+
+  def index
+    users = User.all
+  end
+
+  def show
+    @_current_user = current_user
+    user_with_relations = User.includes(:maps, :likes).find(@_current_user.id)
+
+    if user_with_relations
+      render json: user_with_relations.as_json(include: [:maps, :likes])
+    else
+      render json: {}, status: :not_found
+    end
+  end
+
   def create
     user = User.create(user_params)
 
