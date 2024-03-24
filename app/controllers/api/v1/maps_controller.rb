@@ -1,16 +1,15 @@
-class Api::V1::MapsController < ApplicationController
+class Api::V1::MapsController < Api::V1::BaseController
+
+  skip_before_action :authenticate, only: [:index]
+
   def index
     @maps = Map.includes(:address, :likes).where.not(lat: nil, lng: nil)
     render json: @maps, include: [:address, :likes]
   end
 
-  def show
-    @map = Map.includes(:videos).find(params[:id])
-    @videos = @map.videos
-  end
-
   def create
-    map = Map.new(map_params.except(:address_components, :formatted_address))
+    @_current_user = current_user
+    map = @_current_user.maps.new(map_params.except(:address_components, :formatted_address))
     if map.save
       address = AddressService.save_address_from_address_components(map.id, map_params[:address_components], map_params[:formatted_address])
       address_for_video = AddressService.save_address_for_video(map.id, map_params[:address_components], map_params[:formatted_address])

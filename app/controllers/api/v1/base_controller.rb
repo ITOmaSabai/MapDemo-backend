@@ -9,7 +9,6 @@ class Api::V1::BaseController < ApplicationController
   def authenticate
     authenticate_with_http_token do |token, _options|
       result = verify_id_token(token)
-      p result
 
       if result[:errors]
         render json: {message: "400"}
