@@ -10,6 +10,7 @@ class Api::V1::MapsController < Api::V1::BaseController
   def create
     @_current_user = current_user
     map = @_current_user.maps.new(map_params.except(:address_components, :formatted_address))
+    map.uid = @_current_user.uid
     if map.save
       address = AddressService.save_address_from_address_components(map.id, map_params[:address_components], map_params[:formatted_address])
       address_for_video = AddressService.save_address_for_video(map.id, map_params[:address_components], map_params[:formatted_address])
@@ -40,6 +41,6 @@ class Api::V1::MapsController < Api::V1::BaseController
   private
 
   def map_params
-    params.require(:map).permit(:name, :description, :lat, :lng, :formatted_address, :user_id, address_components: [:long_name, :short_name, types: []])
+    params.require(:map).permit(:name, :description, :lat, :lng, :formatted_address, :user_id, :uid, address_components: [:long_name, :short_name, types: []])
   end
 end
