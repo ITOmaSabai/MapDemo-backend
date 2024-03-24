@@ -3,8 +3,8 @@ class Api::V1::MapsController < Api::V1::BaseController
   skip_before_action :authenticate, only: [:index]
 
   def index
-    @maps = Map.includes(:user, :address, :likes).where.not(lat: nil, lng: nil)
-    render json: @maps, include: [:user, :address, :likes]
+    @maps = Map.includes(:user, :address, :likes, :videos).where.not(lat: nil, lng: nil)
+    render json: @maps, include: [:user, :address, :likes, :videos]
   end
 
   def create
