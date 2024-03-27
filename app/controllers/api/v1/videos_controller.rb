@@ -6,7 +6,6 @@ class Api::V1::VideosController < ApplicationController
     else
       flash[:alert] = 'キーワードを入力してください。'
     end
-    redirect_to videos_path # 適切なパスにリダイレクト
   end
 
   def index
