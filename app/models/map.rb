@@ -11,7 +11,9 @@ class Map < ApplicationRecord
 
   def post_once_per_day
     if user.maps.where('created_at >= ?', Time.zone.now.beginning_of_day).exists?
-      errors.add(:base, "スポットの新規投稿は1日1回まで可能です")
+      # if user.maps.new_record?
+        errors.add(:base, "スポットの新規投稿は1日1回まで可能です")
+      # end
     end
   end
 end
