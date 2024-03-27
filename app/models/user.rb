@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_many :maps, dependent: :destroy
   has_many :likes, dependent: :destroy
+  has_many :searches, dependent: :destroy
 
   def self.find_or_create_user(user_info)
     user = User.find_by(uid: user_info[:uid])
