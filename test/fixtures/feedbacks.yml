@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  usability_rating: 1
+  design_rating: 1
+  body: MyString
+
+two:
+  usability_rating: 1
+  design_rating: 1
+  body: MyString
