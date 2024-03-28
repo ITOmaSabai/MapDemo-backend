@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_27_044249) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_28_031906) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_27_044249) do
     t.datetime "updated_at", null: false
     t.string "formatted_address", null: false
     t.index ["map_id"], name: "index_addresses_on_map_id"
+  end
+
+  create_table "feedbacks", force: :cascade do |t|
+    t.integer "usability_rating"
+    t.integer "design_rating"
+    t.string "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "likes", force: :cascade do |t|
