@@ -9,4 +9,8 @@ class User < ApplicationRecord
 
     User.create!(uid: user_info[:uid], name: user_info[:name], avatar: user_info[:avatar])
   end
+
+  def check_search
+    searches.where('created_at >= ?', Time.zone.now.beginning_of_day).exists?
+  end
 end

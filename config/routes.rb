@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   end
 
   get 'api/v1/profile', to: 'api/v1/users#show'
+  get 'api/v1/search', to: 'api/v1/users#search'
   get '*path', to: 'home#index'
   root to: 'home#index'
 end
