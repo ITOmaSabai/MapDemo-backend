@@ -6,7 +6,8 @@ Rails.application.routes.draw do
         post 'search', on: :collection
       end
       resources :addresses, only: [:index]
-      resources :users, :likes, only: [:index, :create, :destroy]
+      resources :users, only: [:index, :create, :edit, :update, :destroy]
+      resources :likes, only: [:index, :create, :destroy]
       resource :authentication, only: [:create]
       resources :feedbacks, only: [:index, :create]
     end
