@@ -15,6 +15,15 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
   end
 
+  def edit
+    @_current_user = current_user
+  end
+
+  def update
+    @_current_user = current_user
+    @_current_user.update(user_params)
+  end
+
   def destroy
     user = User.destroy(params[:id])
   end
